@@ -8,7 +8,7 @@ if(!session_id()) {
 }
 
 // check to see if the user is authentiated
-if(!isset($_SERVER['authenticated'])) {
+if(!isset($_SESSION['authenticated'])) {
 
     // user is not authenticated so redirect to login page
     header("Location: http://localhost:9090/BookListerCMS_gcedarblade/login.php?url=" . urlencode($_SERVER['SCRIPT_NAME']));
