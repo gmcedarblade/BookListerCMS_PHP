@@ -30,6 +30,8 @@ and open the template in the editor.
                 . "uName varchar(255) primary key,"
                 . " pWord varchar(255)"
                 . ");";
+
+            $pdo->exec($sql);
         } catch (Exception $ex) {
             echo "<h2 style=\"color: red;\">Could not create Table users</h2>";
         }
@@ -53,10 +55,23 @@ and open the template in the editor.
                 // followed by the first name, with an uppercase first letter
                 $password = substr($lname, 0, 4) . strlen($lname) . ucfirst($fname);
 
+                // DEBUG INFO - REMOVE BEFORE PRODUCTION
+                $newHash = password_hash($password, PASSWORD_DEFAULT);
+                $secondNewHash = password_hash($password, PASSWORD_DEFAULT);
                 $md5Hash = md5($password);
                 $password = sha1($password);
 
-                echo "<h2 style=\"color: green;\">Username: $username <br> Password: $password</h2><br>\n";
+                echo "<h2 style=\"color: green;\">Username: $username <br> md5: $md5Hash <br> sha1: $password <br> new hash: $newHash <br> 2nd new hash: $secondNewHash</h2><br>\n";
+
+                try {
+                    $sql = "INSERT INTO users VALUES(:uName, :pWord)";
+                    $statement = $pdo->prepare($sql);
+                    $statement->bindValue(":uName", "$username");
+                    $statement->bindValue(":pWord", "$newHash");
+                    $statement->execute();
+                } catch (Exception $exception) {
+                    echo "<h2 style=\"color: red;\">Could not insert user: $username</h2>";
+                }
 
             }
 
