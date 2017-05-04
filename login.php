@@ -68,6 +68,13 @@ and open the template in the editor.
                 } else {
                     
                     // user not logged in
+                    $_SESSION['failCount']++;
+                    echo  "<h2 style=\"color:red\">Login failed, " . (3 - $_SESSION['failCount'] . " attempts remaining</h2>\n";
+                    if($_SESSION['failCount'] >= 3) {
+
+                        header("Location: http://www.bing.com");
+
+                    }
 
                 }
 
