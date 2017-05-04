@@ -40,14 +40,20 @@ and open the template in the editor.
         foreach ($authorArray as $row) {
 
             echo <<<TABLEROW
-
-                
-                
+            <tr>
+                <td class="author">$row[authorName]</td>
+                <td class="authorid">$row[id]</td>
+                <td class="links">
+                    <a  href="editAuthor.php?authId=$row[id]&authName=$row[authorName]">Edit</a> 
+                    <a  href="deleteAuthor.php?authId=$row[id]&authName=$row[authorName]">Delete</a> 
+                </td>
+            </tr>
 TABLEROW;
 
 
         }
 
+        echo "</table>";
         ?>
     </body>
 </html>
